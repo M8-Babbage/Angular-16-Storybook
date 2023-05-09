@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, } from '@angular/core';
+
+/**
+ construir una lista de clases CSS a partir de los argumentos pasados,
+ */
+const getStyles = (...args: string[]) => ["button", ...args].filter(Boolean);
 
 @Component({
   selector: 'app-button',
@@ -13,11 +18,7 @@ export class ButtonComponent {
   @Input({ required: true }) label: string = 'Button';
   @Input({ required: true }) type: 'primary' | 'secondary' | 'tertiary' = 'primary';
 
-
-  get classes(): string[] {
-    return this.getStyles(this.type);
+  public get classes(): string[] {
+    return getStyles(this.type);
   }
-
-  private getStyles = (...args: string[]) => ["button", ...args].filter(Boolean);
-
 }
