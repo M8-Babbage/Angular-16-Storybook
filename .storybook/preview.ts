@@ -1,12 +1,30 @@
-import { setCompodocJson } from "@storybook/addon-docs/angular";
 import type { Preview } from "@storybook/angular";
-import docJson from "../documentation.json";
-setCompodocJson(docJson);
+
+// Dimensiones de pantalla
+const customViewports = {
+  small: {
+    name: "small",
+    styles: {
+      width: "360px",
+      height: "540px",
+    },
+  },
+  medium: {
+    name: "medium",
+    styles: {
+      width: "768px",
+      height: "1024px",
+    },
+  }
+}
 
 const preview: Preview = {
   parameters: {
+    // Dimensiones de pantalla
+    viewport: {
+      viewports: customViewports,
+    },
     actions: { argTypesRegex: "^on[A-Z].*" },
-    viewMode: "docs",
     controls: {
       matchers: {
         color: /(background|color)$/i,

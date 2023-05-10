@@ -1,24 +1,44 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, } from '@angular/core';
-
-/**
- construir una lista de clases CSS a partir de los argumentos pasados,
- */
-const getStyles = (...args: string[]) => ["button", ...args].filter(Boolean);
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-button',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './button.component.html',
-  styleUrls: ['./button.component.scss']
+  styleUrls: ['./button.component.css'],
 })
-export class ButtonComponent {
-  // Propiedades que serán requeridas en el componente
-  @Input({ required: true }) label: string = 'Button';
-  @Input({ required: true }) type: 'primary' | 'secondary' | 'tertiary' = 'primary';
+export default class ButtonComponent {
+  /**
+   * Is this the principal call to action on the page?
+   */
+  @Input() primary = false;
+
+  /**
+   * What background color to use
+   */
+  @Input() backgroundColor?: string;
+
+  /**
+   * How large should the button be?
+   */
+  @Input() size: 'small' | 'medium' | 'large' = 'medium';
+
+  /**
+   * Button contents
+   *
+   * @required
+   */
+  @Input({ required: true }) label = 'Button';
+
+  /**
+   * Optional click handler
+   */
+  @Output() onClick = new EventEmitter<Event>();
 
   public get classes(): string[] {
-    return getStyles(this.type);
+    const mode = this.primary ? 'storybook-button--primary' : 'storybook-button--secondary';
+
+    return ['storybook-button', `storybook-button--${this.size}`, mode];
   }
 }
